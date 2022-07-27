@@ -1,24 +1,23 @@
-package com.example.android101;
+package com.example.t4jandroid;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.ListAdapter;
-import androidx.recyclerview.widget.RecyclerView;
-import com.example.android101.databinding.FragmentFirstBinding;
+import com.example.t4jandroid.databinding.FragmentFirstBinding;
+import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 
 import java.util.ArrayList;
 
 public class FirstFragment extends Fragment {
 
     private FragmentFirstBinding binding;
+    static ArrayList<String> list = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,9 +32,10 @@ public class FirstFragment extends Fragment {
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment));
 
-        ArrayList<String> list = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.activity_list_item, list);
         binding.listView.setAdapter(adapter);
+
+
     }
 
     @Override

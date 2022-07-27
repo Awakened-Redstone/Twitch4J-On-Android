@@ -1,4 +1,4 @@
-package com.example.android101;
+package com.example.t4jandroid;
 
 import org.junit.Test;
 

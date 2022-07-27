@@ -1,75 +1,38 @@
-package com.example.android101;
+package com.example.t4jandroid;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.splashscreen.SplashScreen;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-import com.github.twitch4j.TwitchClient;
-import com.github.twitch4j.TwitchClientBuilder;
-import com.github.twitch4j.graphql.TwitchGraphQLBuilder;
-import com.github.twitch4j.graphql.command.CommandFetchChatters;
-import com.github.twitch4j.graphql.internal.FetchChattersQuery;
-import com.github.twitch4j.shaded.unspecified.com.github.twitch4j.helix.domain.UserList;
-import com.github.twitch4j.shaded.unspecified.com.netflix.hystrix.HystrixCommand;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import com.example.android101.databinding.ActivityMainBinding;
+import com.example.t4jandroid.databinding.ActivityMainBinding;
+import com.example.t4jandroid.databinding.ActivitySettingsBinding;
+import com.google.android.material.snackbar.Snackbar;
 
-import android.view.Menu;
-import android.view.MenuItem;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-public class MainActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-    public static TwitchClient twitchClient;
+    private ActivitySettingsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-
-        Log.i("A101", "Twitch4J starting");
-
-        new ScheduledThreadPoolExecutor(1).execute(() ->
-                twitchClient = TwitchClientBuilder.builder()
-                        .withEnableGraphQL(true)
-                        .withEnableChat(true)
-                        .withEnableHelix(true)
-                        .withEnablePubSub(true)
-                        .build()
-        );
-
-        Log.i("A101", "Twitch4J started");
 
         createNotificationChannel();
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_settings);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
@@ -79,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                     .setContentTitle("title")
                     .setContentText("content")
                     .setColor(new Random().nextInt(0x1000000))
+                    .setSilent(true)
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText("Much longer text that cannot fit one line, I think, idk, let me just " +
                                     "make this text bigger so it is for sure bigger than one line..."))
@@ -87,19 +51,7 @@ public class MainActivity extends AppCompatActivity {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
             notificationManager.notify(1, builder.build());
 
-            CommandFetchChatters fetchChatters = TwitchGraphQLBuilder.builder().build()
-                    .fetchChatters(null, "zentreya");
-            FetchChattersQuery.Data data = fetchChatters.execute();
-            FetchChattersQuery.Chatters chatters = data.channel().chatters();
-
-            String text = getString(R.string.snack_bar,
-                    String.valueOf(chatters.count()),
-                    String.valueOf(chatters.moderators().size()));
-
-            /*HystrixCommand<UserList> users = twitchClient.getHelix().getUsers(null, Collections.emptyList(), Collections.singletonList("captainsparklez"));
-            String text = users.execute().getUsers().get(0).getDisplayName();*/
-
-            Snackbar.make(view, text, Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         });
     }
@@ -118,14 +70,15 @@ public class MainActivity extends AppCompatActivity {
         notificationManager.createNotificationChannel(channel);
     }
 
-    @Override
+
+    /*@Override
     public boolean onCreateOptionsMenu(@NotNull Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
+    }*/
 
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -134,18 +87,17 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            Intent intent = new Intent(SettingsActivity.this, SettingsFragment.class);
             startActivity(intent);
-            //Navigation.findNavController(this, R.id.nav_host_fragment_content_settings).navigate(R.id.action_FirstFragment_to_SecondFragment);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_settings);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }

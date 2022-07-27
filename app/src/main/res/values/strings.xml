@@ -16,4 +16,5 @@
     <string name="channel_description">Test channel description</string>
 
     <string name="snack_bar">Total: %s | Moderators: %s</string>
+    <string name="chat_message">&lt;%s&gt; %s</string>
 </resources>
