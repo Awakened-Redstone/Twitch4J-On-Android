@@ -1,0 +1,15 @@
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+        jcenter() // Warning: this repository is going to shut down soon
+        maven {
+            name = "sonatype-snapshots"
+            url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        }
+    }
+}
+rootProject.name = "Android 101"
+include ':app'

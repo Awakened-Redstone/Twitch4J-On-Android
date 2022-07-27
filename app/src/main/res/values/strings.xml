@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Twitch4J Android</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="settings_fragment_label">Settings Fragment</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_settings_fragment">Hello settings fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="fab_desc">Refresh, i think</string>
+    <string name="channel_name">Test channel name</string>
+    <string name="channel_description">Test channel description</string>
+
+    <string name="snack_bar">Total: %s | Moderators: %s</string>
+</resources>
